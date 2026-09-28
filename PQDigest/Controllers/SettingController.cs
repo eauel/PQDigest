@@ -24,7 +24,7 @@ namespace PQDigest.Controllers
     [ApiController]
     public class SettingController : ControllerBase
     {
-        private readonly string m_defaultLogo = "Image/GPA_Horizontal.png";
+        private const string DefaultLogoPath = "Image/GPA_Horizontal.png";
         private readonly IWebHostEnvironment m_environment;
 
         public SettingController(IWebHostEnvironment environment)
@@ -51,13 +51,13 @@ namespace PQDigest.Controllers
                 string webRoot = m_environment.WebRootPath;
 
                 if (customer is null)
-                    return Ok(ConvertImageToBase64(Path.Combine(webRoot, m_defaultLogo)));
+                    return Ok(ConvertImageToBase64(Path.Combine(webRoot, DefaultLogoPath)));
 
                 string[] files = Directory.GetFiles(webRoot, Path.Combine("Image", "CompanyLogos", customer.Name + ".*"));
                 if (files.Length > 0)
                     return Ok(ConvertImageToBase64(files[0]));
 
-                return Ok(ConvertImageToBase64(Path.Combine(webRoot, m_defaultLogo)));
+                return Ok(ConvertImageToBase64(Path.Combine(webRoot, DefaultLogoPath)));
             }
         }
 

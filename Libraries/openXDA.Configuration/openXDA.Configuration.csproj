@@ -5,12 +5,25 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <Configurations>Debug;Development;Release</Configurations>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Gemstone.Configuration" Version="1.0.180" />
-    <PackageReference Include="Gemstone.Data" Version="1.0.180" />
-    <PackageReference Include="Gemstone.IO" Version="1.0.180" />
+    <ProjectReference Include="..\..\..\Gemstone\configuration\src\Gemstone.Configuration\Gemstone.Configuration.csproj" Condition="'$(Configuration)'=='Development'">
+      <Private>True</Private>
+      <CopyLocalSatelliteAssemblies>True</CopyLocalSatelliteAssemblies>
+    </ProjectReference>
+    <PackageReference Include="Gemstone.Configuration" Version="$(GemstoneVersion)" Condition="'$(Configuration)'!='Development'" />
+    <ProjectReference Include="..\..\..\Gemstone\data\src\Gemstone.Data\Gemstone.Data.csproj" Condition="'$(Configuration)'=='Development'">
+      <Private>True</Private>
+      <CopyLocalSatelliteAssemblies>True</CopyLocalSatelliteAssemblies>
+    </ProjectReference>
+    <PackageReference Include="Gemstone.Data" Version="$(GemstoneVersion)" Condition="'$(Configuration)'!='Development'" />
+    <ProjectReference Include="..\..\..\Gemstone\io\src\Gemstone.IO\Gemstone.IO.csproj" Condition="'$(Configuration)'=='Development'">
+      <Private>True</Private>
+      <CopyLocalSatelliteAssemblies>True</CopyLocalSatelliteAssemblies>
+    </ProjectReference>
+    <PackageReference Include="Gemstone.IO" Version="$(GemstoneVersion)" Condition="'$(Configuration)'!='Development'" />
     <PackageReference Include="System.Configuration.ConfigurationManager" Version="10.0.9" />
   </ItemGroup>
 

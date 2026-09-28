@@ -23,6 +23,7 @@ mono_crash.*
 [Rr]eleases/
 x64/
 x86/
+build/
 [Aa][Rr][Mm]/
 [Aa][Rr][Mm]64/
 bld/
@@ -175,6 +176,10 @@ publish/
 # Note: Comment the next line if you want to checkin your web deploy settings,
 # but database connection strings (with potential passwords) will be unencrypted
 *.pubxml
+!PQDigest/Properties/PublishProfiles/Development Profile PQDigest.pubxml
+!PQDigest/Properties/PublishProfiles/Release Profile PQDigest.pubxml
+!PQDigest/Properties/PublishProfiles/Docker Development Profile PQDigest.pubxml
+!PQDigest/Properties/PublishProfiles/Docker Release Profile PQDigest.pubxml
 *.publishproj
 
 # Microsoft Azure Web App publish settings. Comment the next line if you want to

@@ -1,6 +1,6 @@
 {
   "name": "pqdigest",
-  "version": "0.0.1",
+  "version": "3.0.1",
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -9,8 +9,7 @@
     "watch": "webpack --watch --color --mode=development",
     "builddev": "npm prune && npm i && webpack --mode=development",
     "build": "npm run prebuild && npm prune && npm ci && webpack --mode=production",
-    "update": "npx npm-check-updates",
-    "lint": "npm ci"
+    "update": "npx npm-check-updates"
   },
   "author": "",
   "license": "MIT",

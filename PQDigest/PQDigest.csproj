@@ -9,14 +9,31 @@
     <RunAnalyzersDuringLiveAnalysis>false</RunAnalyzersDuringLiveAnalysis>
     <RunAnalyzers>false</RunAnalyzers>
     <SatelliteResourceLanguages>en</SatelliteResourceLanguages>
+    <AssemblyTitle>PQDigest</AssemblyTitle>
+    <Description></Description>
+    <Company>GridProtectionAlliance</Company>
+    <Product>PQDigest</Product>
+    <Copyright>Copyright © 2026</Copyright>
+    <Configurations>Debug;Development;Release</Configurations>
     <DefineConstants>$(DefineConstants);IS_GEMSTONE</DefineConstants>
+    <VersionFile>$(MSBuildProjectDirectory)\..\Scripts\PQDigest.version</VersionFile>
+    <Version>$([System.IO.File]::ReadAllText('$(VersionFile)').Trim())</Version>
+    <AssemblyVersion>$(Version)</AssemblyVersion>
+    <FileVersion>$(Version)</FileVersion>
   </PropertyGroup>
   <PropertyGroup>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="package.json" />
+    <None Include="package.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </None>
+    <Content Update="wwwroot\js\PQDigest.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
     <TypeScriptCompile Include="wwwroot\tsx\**">
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>Never</CopyToPublishDirectory>
@@ -37,16 +54,32 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Gemstone.Common" Version="1.0.180" Condition="'$(Configuration)'!='Debug'" />
-    <PackageReference Include="Gemstone.Data" Version="1.0.180" Condition="'$(Configuration)'!='Debug'" />
-    <PackageReference Include="Gemstone.Numeric" Version="1.0.180" Condition="'$(Configuration)'!='Debug'" />
-    <PackageReference Include="Gemstone.PQDIF" Version="1.0.180" Condition="'$(Configuration)'!='Debug'" />
-    <PackageReference Include="Gemstone.Web" Version="1.0.180" Condition="'$(Configuration)'!='Debug'" />
-    <ProjectReference Include="..\..\gemstone\web\src\Gemstone.Web\Gemstone.Web.csproj" Condition="'$(Configuration)'=='Debug'" />
-    <ProjectReference Include="..\..\gemstone\common\src\Gemstone\Gemstone.Common.csproj" Condition="'$(Configuration)'=='Debug'" />
-    <ProjectReference Include="..\..\gemstone\data\src\Gemstone.Data\Gemstone.Data.csproj" Condition="'$(Configuration)'=='Debug'" />
-    <ProjectReference Include="..\..\gemstone\pqdif\src\Gemstone.PQDif\Gemstone.PQDif.csproj" Condition="'$(Configuration)'=='Debug'" />
-    <ProjectReference Include="..\..\gemstone\numeric\src\Gemstone.Numeric\Gemstone.Numeric.csproj" Condition="'$(Configuration)'=='Debug'" />
+    <!-- Development: build against local Gemstone source; otherwise: NuGet packages -->
+    <ProjectReference Include="..\..\Gemstone\common\src\Gemstone\Gemstone.Common.csproj" Condition="'$(Configuration)'=='Development'">
+      <Private>True</Private>
+      <CopyLocalSatelliteAssemblies>True</CopyLocalSatelliteAssemblies>
+    </ProjectReference>
+    <PackageReference Include="Gemstone.Common" Version="$(GemstoneVersion)" Condition="'$(Configuration)'!='Development'" />
+    <ProjectReference Include="..\..\Gemstone\data\src\Gemstone.Data\Gemstone.Data.csproj" Condition="'$(Configuration)'=='Development'">
+      <Private>True</Private>
+      <CopyLocalSatelliteAssemblies>True</CopyLocalSatelliteAssemblies>
+    </ProjectReference>
+    <PackageReference Include="Gemstone.Data" Version="$(GemstoneVersion)" Condition="'$(Configuration)'!='Development'" />
+    <ProjectReference Include="..\..\Gemstone\numeric\src\Gemstone.Numeric\Gemstone.Numeric.csproj" Condition="'$(Configuration)'=='Development'">
+      <Private>True</Private>
+      <CopyLocalSatelliteAssemblies>True</CopyLocalSatelliteAssemblies>
+    </ProjectReference>
+    <PackageReference Include="Gemstone.Numeric" Version="$(GemstoneVersion)" Condition="'$(Configuration)'!='Development'" />
+    <ProjectReference Include="..\..\Gemstone\pqdif\src\Gemstone.PQDIF\Gemstone.PQDIF.csproj" Condition="'$(Configuration)'=='Development'">
+      <Private>True</Private>
+      <CopyLocalSatelliteAssemblies>True</CopyLocalSatelliteAssemblies>
+    </ProjectReference>
+    <PackageReference Include="Gemstone.PQDIF" Version="$(GemstoneVersion)" Condition="'$(Configuration)'!='Development'" />
+    <ProjectReference Include="..\..\Gemstone\web\src\Gemstone.Web\Gemstone.Web.csproj" Condition="'$(Configuration)'=='Development'">
+      <Private>True</Private>
+      <CopyLocalSatelliteAssemblies>True</CopyLocalSatelliteAssemblies>
+    </ProjectReference>
+    <PackageReference Include="Gemstone.Web" Version="$(GemstoneVersion)" Condition="'$(Configuration)'!='Development'" />
 
     <PackageReference Include="HIDS" Version="1.2.0" />
     <PackageReference Include="MathNet.Numerics" Version="5.0.0" />
